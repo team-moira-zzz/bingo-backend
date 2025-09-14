@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moira.bingobackend.user.mapper.UserMapper">
+    <select id="checkEmail">
+        SELECT COUNT(id) AS USER_CNT
+        FROM   USERS
+        WHERE  email = #{email}
+    </select>
+
+    <insert id="insertUser" parameterType="com.moira.bingobackend.user.entity.User">
+        INSERT INTO USERS (
+              id
+            , role
+            , status
+            , email
+            , password
+            , name
+            , nickname
+            , phone
+            , created_at
+            , updated_at
+        ) VALUES (
+              #{id}
+            , #{role}
+            , #{status}
+            , #{email}
+            , #{password}
+            , #{name}
+            , #{nickname}
+            , #{phone}
+            , CURRENT_TIMESTAMP
+            , CURRENT_TIMESTAMP
+        )
+    </insert>
+
+</mapper>
