@@ -1,5 +1,7 @@
 package com.moira.bingobackend.user.service;
 
+import com.moira.bingobackend.global.exception.ErrorCode;
+import com.moira.bingobackend.global.exception.custom.BingoUserException;
 import com.moira.bingobackend.global.utility.Encryptor;
 import com.moira.bingobackend.user.dto.SignupRequest;
 import com.moira.bingobackend.user.entity.User;
@@ -31,34 +33,34 @@ public class SignupService {
 
     private void validate(SignupRequest request) {
         if (!StringUtils.hasText(request.email())) {
-            throw new IllegalArgumentException("이메일은 필수 입력 항목입니다.");
+            throw new BingoUserException(ErrorCode.NO_EMAIL);
         }
         if (!StringUtils.hasText(request.password())) {
-            throw new IllegalArgumentException("비밀번호는 필수 입력 항목입니다.");
+            throw new BingoUserException(ErrorCode.NO_PASSWORD);
         }
         if (!StringUtils.hasText(request.name())) {
-            throw new IllegalArgumentException("이름은 필수 입력 항목입니다.");
+            throw new BingoUserException(ErrorCode.NO_NAME);
         }
         if (!StringUtils.hasText(request.nickname())) {
-            throw new IllegalArgumentException("닉네임은 필수 입력 항목입니다.");
+            throw new BingoUserException(ErrorCode.NO_NICKNAME);
         }
         if (!StringUtils.hasText(request.phone())) {
-            throw new IllegalArgumentException("전화번호는 필수 입력 항목입니다.");
+            throw new BingoUserException(ErrorCode.NO_PHONE);
         }
 
         // 1. 이메일 형식 체크
         if (!EMAIL_PATTERN.matcher(request.email()).matches()) {
-            throw new IllegalArgumentException("이메일 형식이 올바르지 않습니다.");
+            throw new BingoUserException(ErrorCode.INVALID_EMAIL);
         }
 
         // 2. 비밀번호 형식 체크
         if (!PASSWORD_PATTERN.matcher(request.password()).matches()) {
-            throw new IllegalArgumentException("비밀번호는 8~24자이며, 대소문자, 숫자, 특수문자를 각각 하나 이상 포함해야 합니다.");
+            throw new BingoUserException(ErrorCode.INVALID_PASSWORD);
         }
 
         // 3. 전화번호 형식 체크
         if (!PHONE_PATTERN.matcher(request.phone()).matches()) {
-            throw new IllegalArgumentException("전화번호 형식이 올바르지 않습니다. (예: 01012345678)");
+            throw new BingoUserException(ErrorCode.INVALID_PHONE);
         }
     }
 
@@ -68,7 +70,7 @@ public class SignupService {
         int result = userMapper.checkEmail(email);
 
         if (result > 0) {
-            throw new RuntimeException("이미 사용중인 이메일입니다."); // TODO
+            throw new BingoUserException(ErrorCode.USING_EMAIL);
         }
     }
 
