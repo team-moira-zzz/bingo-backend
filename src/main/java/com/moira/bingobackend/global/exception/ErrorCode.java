@@ -14,7 +14,8 @@ public enum ErrorCode {
     , INVALID_PASSWORD("U007", "비밀번호는 8~24자이며, 대소문자, 숫자, 특수문자를 각각 하나 이상 포함해야 합니다.")
     , INVALID_PHONE("U008", "전화번호 형식이 올바르지 않습니다. (예: 01012345678)")
     , USING_EMAIL("U009", "이미 사용중인 이메일입니다.")
-    , USING_NICKNAME("U010", "이미 사용중인 닉네임입니다.");
+    , USING_NICKNAME("U010", "이미 사용중인 닉네임입니다.")
+    , NOT_FOUND_USER("U011", "올바르지 않은 이메일 혹은 비밀번호입니다.");
 
     private final String code;
     private final String message;

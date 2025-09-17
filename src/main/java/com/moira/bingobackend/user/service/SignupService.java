@@ -3,7 +3,7 @@ package com.moira.bingobackend.user.service;
 import com.moira.bingobackend.global.exception.ErrorCode;
 import com.moira.bingobackend.global.exception.custom.BingoUserException;
 import com.moira.bingobackend.global.utility.Encryptor;
-import com.moira.bingobackend.user.dto.SignupRequest;
+import com.moira.bingobackend.user.dto.request.SignupRequest;
 import com.moira.bingobackend.user.entity.User;
 import com.moira.bingobackend.user.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;

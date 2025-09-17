@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.moira.bingobackend.user.mapper.UserMapper">
+
+    <!-- 회원가입 -->
     <select id="checkEmail">
         SELECT COUNT(id) AS USER_CNT
         FROM   USERS
@@ -9,27 +11,76 @@
 
     <insert id="insertUser" parameterType="com.moira.bingobackend.user.entity.User">
         INSERT INTO USERS (
-              id
-            , role
-            , status
-            , email
-            , password
-            , name
-            , nickname
-            , phone
-            , created_at
-            , updated_at
+                            id
+                          , role
+                          , status
+                          , email
+                          , password
+                          , name
+                          , nickname
+                          , phone
+                          , rtk
+                          , last_login_at
+                          , created_at
+                          , updated_at
         ) VALUES (
-              #{id}
-            , #{role}
-            , #{status}
-            , #{email}
-            , #{password}
-            , #{name}
-            , #{nickname}
-            , #{phone}
-            , CURRENT_TIMESTAMP
-            , CURRENT_TIMESTAMP
+                   #{id}
+                 , #{role}
+                 , #{status}
+                 , #{email}
+                 , #{password}
+                 , #{name}
+                 , #{nickname}
+                 , #{phone}
+                 , null
+                 , null
+                 , CURRENT_TIMESTAMP
+                 , CURRENT_TIMESTAMP
+                 )
+    </insert>
+
+    <!-- 로그인 -->
+    <select id="selectUserByEmail" resultType="com.moira.bingobackend.user.entity.User">
+        SELECT
+               id
+             , role
+             , status
+             , email
+             , password
+             , name
+             , nickname
+             , phone
+             , rtk
+             , last_login_at
+             , created_at
+             , updated_at
+        FROM   USERS
+        WHERE  email = #{email}
+    </select>
+
+    <update id="updateUserLoginInfo">
+        UPDATE USERS
+        SET    rtk           = #{rtk}
+             , last_login_at = CURRENT_TIMESTAMP
+             , updated_at    = CURRENT_TIMESTAMP
+        WHERE  id = #{user.id}
+    </update>
+
+    <insert id="insertUserLoginHistory" parameterType="com.moira.bingobackend.user.entity.UserLoginHistory">
+        INSERT INTO USER_LOGIN_HISTORY(
+               id
+             , user_id
+             , ip_address
+             , user_agent
+             , device_id
+             , login_at
+        ) VALUES (
+               #{id}
+             , #{userId}
+             , #{ipAddress}
+             , #{userAgent}
+             , #{deviceId}
+             , CURRENT_TIMESTAMP
         )
     </insert>
 

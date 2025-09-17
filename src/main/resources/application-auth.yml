@@ -1,0 +1,7 @@
+jwt:
+  secret:
+    key: ${JWT_SECRET_KEY}
+  issuer: MOIRA_BINGO
+  expiration-time:
+    atk: 3600000
+    rtk: 86400000

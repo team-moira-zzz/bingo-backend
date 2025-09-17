@@ -1,7 +1,8 @@
 package com.moira.bingobackend.user.entity;
 
 import com.moira.bingobackend.global.utility.Encryptor;
-import com.moira.bingobackend.user.dto.SignupRequest;
+import com.moira.bingobackend.user.dto.request.SignupRequest;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -9,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@AllArgsConstructor
 @Getter
 @Setter
 public class User {
@@ -20,6 +22,8 @@ public class User {
     private String name;
     private String nickname;
     private String phone;
+    private String rtk;
+    private LocalDateTime lastLoginAt;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -32,6 +36,8 @@ public class User {
         this.name = request.name();
         this.nickname = request.nickname();
         this.phone = encryptor.encrypt(request.phone());
+        this.rtk = null;
+        this.lastLoginAt = null;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }

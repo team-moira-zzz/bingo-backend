@@ -13,4 +13,5 @@ spring:
   profiles:
     active: ${SPRING.PROFILES_ACTIVE:local}
     include:
+      - auth
       - db

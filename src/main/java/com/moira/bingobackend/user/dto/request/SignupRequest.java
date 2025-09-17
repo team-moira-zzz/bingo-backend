@@ -1,4 +1,4 @@
-package com.moira.bingobackend.user.dto;
+package com.moira.bingobackend.user.dto.request;
 
 public record SignupRequest(
           String email
