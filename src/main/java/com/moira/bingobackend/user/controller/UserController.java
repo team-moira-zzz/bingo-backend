@@ -57,6 +57,13 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
+    @GetMapping("/signup/check/nickname")
+    ResponseEntity<Object> checkNickname(@RequestParam String nickname) {
+        signupService.checkNickname(nickname);
+
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
     @PostMapping("/signup")
     ResponseEntity<Object> signup(@RequestBody SignupRequest signupRequest) {
         signupService.signup(signupRequest);

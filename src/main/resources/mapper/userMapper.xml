@@ -9,6 +9,12 @@
         WHERE  email = #{email}
     </select>
 
+    <select id="checkNickname">
+        SELECT COUNT(id) AS USER_CNT
+        FROM   USERS
+        WHERE  nickname = #{nickname}
+    </select>
+
     <insert id="insertUser" parameterType="com.moira.bingobackend.user.entity.User">
         INSERT INTO USERS (
                             id

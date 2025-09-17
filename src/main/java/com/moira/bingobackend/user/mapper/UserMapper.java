@@ -10,6 +10,8 @@ public interface UserMapper {
     // 회원가입
     int checkEmail(String email);
 
+    int checkNickname(String nickname);
+
     void insertUser(User user);
 
     // 로그인

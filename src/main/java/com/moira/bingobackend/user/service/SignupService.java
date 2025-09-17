@@ -65,6 +65,16 @@ public class SignupService {
     }
 
     @Transactional(readOnly = true)
+    public void checkNickname(String nickname) {
+        // 닉네임 존재 여부 확인
+        int result = userMapper.checkNickname(nickname);
+
+        if (result > 0) {
+            throw new BingoUserException(ErrorCode.USING_NICKNAME);
+        }
+    }
+
+    @Transactional(readOnly = true)
     public void checkEmail(String email) {
         // 이메일 존재 여부 확인
         int result = userMapper.checkEmail(email);
