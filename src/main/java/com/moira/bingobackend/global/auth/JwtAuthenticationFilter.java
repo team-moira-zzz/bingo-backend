@@ -70,7 +70,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain
     ) throws IOException {
         log.info("[요청 URI] {}", request.getRequestURI());
-        log.info("[AccessToken 포함 여부] {}", request.getHeader(HttpHeaders.AUTHORIZATION) != null);
 
         // 1. Authorization 헤더 값 가져오기
         String authorizationHeaderValue = request.getHeader(HttpHeaders.AUTHORIZATION);
@@ -96,6 +95,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String email = claims.get("email", String.class);
             String role = claims.get("role", String.class);
             String nickname = claims.get("nickname", String.class);
+
+            log.info("[접속 유저] {}: {}", nickname, email);
 
             SimpleUserAuth simpleUserAuth = new SimpleUserAuth(userId, email, role, nickname);
 

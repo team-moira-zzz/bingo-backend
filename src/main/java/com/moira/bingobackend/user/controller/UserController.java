@@ -1,9 +1,12 @@
 package com.moira.bingobackend.user.controller;
 
+import com.moira.bingobackend.global.auth.SimpleUserAuth;
+import com.moira.bingobackend.global.auth.UserPrincipal;
 import com.moira.bingobackend.user.dto.request.LoginRequest;
 import com.moira.bingobackend.user.dto.request.SignupRequest;
 import com.moira.bingobackend.user.dto.response.TokenResponse;
 import com.moira.bingobackend.user.service.LoginService;
+import com.moira.bingobackend.user.service.LogoutService;
 import com.moira.bingobackend.user.service.SignupService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,10 +21,22 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class UserController {
     private final LoginService loginService;
+    private final LogoutService logoutService;
     private final SignupService signupService;
 
     private String getIpAddress(HttpServletRequest request) {
         return request.getRemoteAddr();
+    }
+
+    private void removeRtkFromCookie(HttpServletResponse response) {
+        Cookie cookie = new Cookie("refreshToken", null);
+
+        // cookie.setSecure(true);         // HTTPS 연결에서만 전송 (운영 환경에서는 주석 해제)
+        cookie.setHttpOnly(true);          // JavaScript로 접근 불가능
+        cookie.setPath("/");               // 모든 경로에서 쿠키 사용 가능
+        cookie.setMaxAge(0);               // 쿠키 만료
+
+        response.addCookie(cookie);
     }
 
     private void putRtkInCookie(HttpServletResponse response, String rtk) {
@@ -66,5 +81,19 @@ public class UserController {
 
         // atk는 요청 본문으로 반환한다.
         return ResponseEntity.status(HttpStatus.OK).body(tokens.atk());
+    }
+
+    @PostMapping("/logout")
+    ResponseEntity<Object> logout(
+            @UserPrincipal SimpleUserAuth simpleUserAuth,
+            HttpServletResponse httpServletResponse
+    ) {
+        // db에서 rtk를 삭제한다.
+        logoutService.logout(simpleUserAuth);
+
+        // 쿠키에 담긴 rtk를 초기화한다.
+        this.removeRtkFromCookie(httpServletResponse);
+
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 }

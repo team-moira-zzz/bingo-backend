@@ -84,4 +84,12 @@
         )
     </insert>
 
+    <!-- 로그아웃 -->
+    <update id="updateUserLogoutInfo">
+        UPDATE USERS
+        SET
+               rtk = null
+             , updated_at    = CURRENT_TIMESTAMP
+        WHERE  id = #{userId}
+    </update>
 </mapper>

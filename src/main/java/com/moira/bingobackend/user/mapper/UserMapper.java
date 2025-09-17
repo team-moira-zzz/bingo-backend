@@ -18,4 +18,7 @@ public interface UserMapper {
     void updateUserLoginInfo(@Param("user") User user, @Param("rtk") String rtk);
 
     void insertUserLoginHistory(UserLoginHistory userLoginHistory);
+
+    // 로그아웃
+    void updateUserLogoutInfo(String userId);
 }
