@@ -1,4 +1,4 @@
-package com.moira.bingobackend.global.utility;
+package com.moira.bingobackend.global.auth;
 
 import com.moira.bingobackend.user.entity.User;
 import io.jsonwebtoken.Claims;

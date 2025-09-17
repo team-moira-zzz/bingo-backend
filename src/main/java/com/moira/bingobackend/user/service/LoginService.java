@@ -2,7 +2,7 @@ package com.moira.bingobackend.user.service;
 
 import com.moira.bingobackend.global.exception.ErrorCode;
 import com.moira.bingobackend.global.exception.custom.BingoUserException;
-import com.moira.bingobackend.global.utility.JwtProvider;
+import com.moira.bingobackend.global.auth.JwtProvider;
 import com.moira.bingobackend.user.dto.request.LoginRequest;
 import com.moira.bingobackend.user.dto.response.TokenResponse;
 import com.moira.bingobackend.user.entity.User;
