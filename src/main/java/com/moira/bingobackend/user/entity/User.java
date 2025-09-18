@@ -2,6 +2,7 @@ package com.moira.bingobackend.user.entity;
 
 import com.moira.bingobackend.global.utility.Encryptor;
 import com.moira.bingobackend.user.dto.request.SignupRequest;
+import com.moira.bingobackend.user.dto.response.UserProfileResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,5 +41,18 @@ public class User {
         this.lastLoginAt = null;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
+    }
+
+    public UserProfileResponse toUserProfileResponse(String decryptedPhone) {
+        return new UserProfileResponse(
+                this.id,
+                this.email,
+                this.name,
+                this.nickname,
+                decryptedPhone,
+                this.role.name(),
+                this.status.name(),
+                this.createdAt
+        );
     }
 }

@@ -5,8 +5,10 @@ import com.moira.bingobackend.global.auth.UserPrincipal;
 import com.moira.bingobackend.user.dto.request.LoginRequest;
 import com.moira.bingobackend.user.dto.request.SignupRequest;
 import com.moira.bingobackend.user.dto.response.TokenResponse;
+import com.moira.bingobackend.user.dto.response.UserProfileResponse;
 import com.moira.bingobackend.user.service.LoginService;
 import com.moira.bingobackend.user.service.LogoutService;
+import com.moira.bingobackend.user.service.ProfileService;
 import com.moira.bingobackend.user.service.SignupService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final LoginService loginService;
     private final LogoutService logoutService;
+    private final ProfileService profileService;
     private final SignupService signupService;
 
     private String getIpAddress(HttpServletRequest request) {
@@ -102,5 +105,12 @@ public class UserController {
         this.removeRtkFromCookie(httpServletResponse);
 
         return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
+    @GetMapping("/me")
+    ResponseEntity<UserProfileResponse> getMyProfile(@UserPrincipal SimpleUserAuth simpleUserAuth) {
+        UserProfileResponse userProfileResponse = profileService.getMyProfile(simpleUserAuth);
+
+        return ResponseEntity.status(HttpStatus.OK).body(userProfileResponse);
     }
 }

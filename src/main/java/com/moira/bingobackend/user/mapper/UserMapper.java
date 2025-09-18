@@ -23,4 +23,7 @@ public interface UserMapper {
 
     // 로그아웃
     void updateUserLogoutInfo(String userId);
+
+    // 프로필
+    User selectUserProfile(String userId);
 }
